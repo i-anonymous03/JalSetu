@@ -67,7 +67,13 @@ Linux and Windows files
 ==================================
 These files contain API keys and should NOT be tracked in public repos.
 We ignore the generated JSON/plist files from the Firebase CLI.
-/android/app/google-services.json
+/android/app/google-services.json# Unset the Windows credential manager helper
+git config --global --unset credential.helper
+
+# If that fails, try setting it to 'store' temporarily
+# This forces Git to use a simple text store and ask you for credentials.
+# Then, when you push, it will store the correct PAT.
+git config --global credential.helper store
 /ios/Runner/GoogleService-Info.plist
 /web/firebase-config.js
 /lib/firebase_options.dart # If you are regenerating this file frequently, consider ignoring it. Otherwise, keep it tracked.
