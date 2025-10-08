@@ -1,0 +1,1 @@
+This folder is for images. You can add your logo or other image assets here.

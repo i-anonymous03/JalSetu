@@ -1,0 +1,73 @@
+Standard Flutter and General Project Ignore file for JalSetu project
+==================================
+1. GENERAL & MISCELLANEOUS (From your existing file)
+==================================
+Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+VS Code (keeping this commented out as per standard practice)
+#.vscode/
+
+==================================
+2. FLUTTER, DART, and BUILD FILES
+==================================
+Build files and output
+/build
+.dart_tool/
+**/doc/api/
+**/ios/Flutter/.last_build_id
+
+Dependency cache
+.flutter-plugins-dependencies
+.packages
+.flutter-plugins
+/ios/.symlinks
+.pub-cache/
+.pub/
+/coverage/
+
+Symbolication and Obfuscation related
+app..symbols
+app..map.json
+
+==================================
+3. ANDROID AND ENVIRONMENT-SPECIFIC
+==================================
+Android Studio will place build artifacts here
+/android/local.properties
+/android/.gradle
+/android/key.properties
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+Linux and Windows files
+/linux/flutter/generated_plugins.cmake
+/windows/flutter/generated_plugins.cmake
+
+==================================
+4. FIREBASE CONFIGURATION (CRITICAL for security)
+==================================
+These files contain API keys and should NOT be tracked in public repos.
+We ignore the generated JSON/plist files from the Firebase CLI.
+/android/app/google-services.json
+/ios/Runner/GoogleService-Info.plist
+/web/firebase-config.js
+/lib/firebase_options.dart # If you are regenerating this file frequently, consider ignoring it. Otherwise, keep it tracked.

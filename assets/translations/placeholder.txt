@@ -1,0 +1,1 @@
+This folder is for translation files (e.g., en.json, hi.json) for localization.
