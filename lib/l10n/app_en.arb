@@ -1,0 +1,72 @@
+{
+  "@@locale": "en",
+  "appName": "JalSetu",
+  
+  // --- AUTH/LOGIN ---
+  "welcomeBack": "Welcome Back",
+  "signInInstructions": "Sign in to continue to JalSetu",
+  "emailPlaceholder": "Email Address",
+  "passwordPlaceholder": "Password",
+  "signInButton": "Sign In",
+  "dontHaveAccount": "Don't have an account?",
+  "registerNow": "Register Now",
+  "orDivider": "Or",
+  "continueWithGoogle": "Continue with Google",
+  "phoneSignIn": "Phone Sign-In",
+  "enterPhone": "Enter Your Phone Number",
+  "sendCode": "Send Code",
+  "enterOtp": "Enter OTP",
+  "verifyOtp": "Verify OTP",
+
+  // --- REGISTRATION ---
+  "registerTitle": "Register",
+  "createAccountTitle": "Create Your JalSetu Account",
+  "joinCommunityInstruction": "Join the community to monitor water and health.",
+  "confirmPasswordPlaceholder": "Confirm Password",
+  "iAmA": "I am a...",
+  "roleVillager": "Villager",
+  "roleASHAWorker": "ASHA Worker",
+
+  // --- NAVIGATION/GENERAL ---
+  "navHome": "Home",
+  "navAlerts": "Alerts",
+  "navHealth": "Health",
+  "navFeedback": "Feedback",
+  "navHelp": "Help",
+
+  // --- DASHBOARD/HOMESCREEN ---
+  "dashboardTitle": "JalSetu - Dashboard",
+  "reportSymptomsButton": "Report Symptoms",
+  
+  // --- ALERTS ---
+  "alertsTitle": "Alerts",
+
+  // --- HEALTH REPORTING (SYMPTOMS) ---
+  "reportSymptomsTitle": "Report Health Symptoms",
+  "symptomSelectPrompt": "Please select the symptoms you are experiencing:",
+  "symptomFever": "Fever",
+  "symptomDiarrhoea": "Diarrhoea",
+  "symptomVomiting": "Vomiting",
+  "symptomStomachPain": "Stomach Pain / Cramps",
+  "additionalNotesLabel": "Additional Notes (Optional)",
+  "submitReportButton": "Submit Report",
+
+  // --- HEALTH SCREEN ---
+  "waterHealthReportTitle": "Water Health Report",
+  "healthAnalysisPlaceholder": "Detailed water health analysis will be shown here.",
+
+  // --- FEEDBACK SCREEN ---
+  "feedbackTitle": "Feedback",
+  "feedbackLabel": "Your Feedback",
+  "submitFeedbackButton": "Submit Feedback",
+  "feedbackThankYou": "Thank you for your feedback!",
+
+  // --- HELP SCREEN ---
+  "helpSupportTitle": "Help & Support",
+  "faqTitle": "FAQs",
+  "faqSubtitle": "Frequently Asked Questions",
+  "contactUsTitle": "Contact Us",
+  "contactUsSubtitle": "Get in touch with our support team",
+  "aboutUsTitle": "About Us",
+  "aboutUsSubtitle": "Learn more about JalSetu"
+}

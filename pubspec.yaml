@@ -1,6 +1,7 @@
 name: jalsetu
 description: A new Flutter project for JalSetu.
 
+# This line ensures the app is not published to pub.dev
 publish_to: 'none' 
 
 version: 1.0.0+1
@@ -20,9 +21,13 @@ dependencies:
   provider: ^6.0.5
   shared_preferences: ^2.2.2
   http: ^1.1.0
+  
+  # --- START: LOCALIZATION ADDITIONS ---
   flutter_localizations:
     sdk: flutter
-  intl: ^0.20.2 # <-- THIS IS THE UPDATED LINE
+  intl: ^0.19.0 # Use 0.19.0 for better compatibility with Flutter 3.x
+  # --- END: LOCALIZATION ADDITIONS ---
+
 
 dev_dependencies:
   flutter_test:
@@ -31,15 +36,20 @@ dev_dependencies:
   flutter_launcher_icons: "^0.13.1" 
   change_app_package_name: "^1.1.0"
 
+# --- START: LOCALIZATION & ASSETS CONFIGURATION ---
 flutter:
+  # This flag is CRUCIAL for i18n: it tells Flutter to auto-generate translation code
+  flutter_gen: true 
   uses-material-design: true
   assets:
     - assets/images/
-    - assets/translations/
+    # If you had translation files manually stored, they'd go here. 
+    # But with flutter_gen, the ARB files are picked up via the l10n.yaml.
 
+# --- END: LOCALIZATION & ASSETS CONFIGURATION ---
 
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: false
   image_path: "assets/images/jalsetu_logo.png" 
-  min_sdk_android: 21 
+  min_sdk_android: 21
