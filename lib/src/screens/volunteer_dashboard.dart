@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jalsetu/generated/app_localizations.dart';
 import 'package:jalsetu/src/widgets/language_selector.dart';
 import 'package:jalsetu/src/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
@@ -17,11 +16,20 @@ class VolunteerDashboard extends StatelessWidget {
           const SizedBox(width: 8),
           IconButton(
             icon: const Icon(Icons.logout),
+            tooltip: 'Sign Out',
             onPressed: () async {
-              final authProvider = Provider.of<AuthProvider>(context, listen: false);
-              await authProvider.signOut();
-              if (context.mounted) {
-                Navigator.pushReplacementNamed(context, '/welcome');
+              try {
+                final authProvider = Provider.of<AuthProvider>(context, listen: false);
+                await authProvider.signOut();
+                if (context.mounted) {
+                  Navigator.pushReplacementNamed(context, '/welcome');
+                }
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Error signing out. Please try again.')),
+                  );
+                }
               }
             },
           ),

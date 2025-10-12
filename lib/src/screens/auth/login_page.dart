@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jalsetu/generated/app_localizations.dart';
 import 'package:jalsetu/routes.dart';
 import 'package:jalsetu/src/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +44,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     if (!mounted) return;
 
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    final l10n = AppLocalizations.of(context)!;
     
     try {
       await authProvider.signIn(
@@ -136,8 +134,20 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   const SizedBox(height: 16),
                   TextField(
                     controller: _passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(hintText: 'Password'),
+                    obscureText: !_isPasswordVisible,
+                    decoration: InputDecoration(
+                      hintText: 'Password',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isPasswordVisible ? Icons.visibility_off : Icons.visibility,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 24),
                   ElevatedButton(

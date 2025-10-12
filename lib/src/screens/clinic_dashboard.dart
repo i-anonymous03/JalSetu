@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:jalsetu/generated/app_localizations.dart';
 import 'package:jalsetu/src/widgets/language_selector.dart';
 import 'package:jalsetu/src/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
-class ClinicDashboard extends StatelessWidget {
+class ClinicDashboard extends StatefulWidget {
   const ClinicDashboard({super.key});
+
+  @override
+  State<ClinicDashboard> createState() => _ClinicDashboardState();
+}
+
+class _ClinicDashboardState extends State<ClinicDashboard> {
+  Widget _buildHealthAlert(String title, String location, String description, Color color) {
+    return _buildAlertCard(
+      context,
+      title,
+      location,
+      description,
+      color,
+      Icons.warning,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +32,20 @@ class ClinicDashboard extends StatelessWidget {
           const SizedBox(width: 8),
           IconButton(
             icon: const Icon(Icons.logout),
+            tooltip: 'Sign Out',
             onPressed: () async {
-              final authProvider = Provider.of<AuthProvider>(context, listen: false);
-              await authProvider.signOut();
-              if (context.mounted) {
-                Navigator.pushReplacementNamed(context, '/welcome');
+              try {
+                final authProvider = Provider.of<AuthProvider>(context, listen: false);
+                await authProvider.signOut();
+                if (context.mounted) {
+                  Navigator.pushReplacementNamed(context, '/welcome');
+                }
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Error signing out. Please try again.')),
+                  );
+                }
               }
             },
           ),
@@ -66,19 +90,17 @@ class ClinicDashboard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            _buildAlertCard(
+            _buildHealthAlert(
               'High Diarrhea Cases',
               'Ward 3, Village X',
               '5 cases reported in last 24 hours',
               Colors.red,
-              Icons.warning,
             ),
-            _buildAlertCard(
+            _buildHealthAlert(
               'Water Quality Alert',
               'Ward 5, Village Y',
               'High turbidity levels detected',
               Colors.orange,
-              Icons.warning,
             ),
 
             const SizedBox(height: 24),
@@ -182,11 +204,19 @@ class ClinicDashboard extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Emergency response initiated'),
+              backgroundColor: Colors.red,
+              duration: Duration(seconds: 2),
+            ),
+          );
           // TODO: Implement emergency response
         },
         backgroundColor: Colors.red,
         icon: const Icon(Icons.emergency),
         label: const Text('Emergency Response'),
+        tooltip: 'Initiate Emergency Response',
       ),
     );
   }
@@ -226,6 +256,7 @@ class ClinicDashboard extends StatelessWidget {
   }
 
   Widget _buildAlertCard(
+    BuildContext context,
     String title,
     String location,
     String description,
@@ -265,17 +296,44 @@ class ClinicDashboard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(
+                TextButton.icon(
                   onPressed: () {
-                    // TODO: Implement view details
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text(title),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Location: $location'),
+                            const SizedBox(height: 8),
+                            Text(description),
+                          ],
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Close'),
+                          ),
+                        ],
+                      ),
+                    );
                   },
-                  child: const Text('View Details'),
+                  icon: const Icon(Icons.visibility),
+                  label: const Text('View Details'),
                 ),
-                TextButton(
+                TextButton.icon(
                   onPressed: () {
-                    // TODO: Implement take action
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Response action initiated'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
                   },
-                  child: const Text('Take Action'),
+                  icon: const Icon(Icons.launch),
+                  label: const Text('Take Action'),
                 ),
               ],
             ),
@@ -292,26 +350,29 @@ class ClinicDashboard extends StatelessWidget {
     Color color,
     VoidCallback onPressed,
   ) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 24),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 12),
+    return Tooltip(
+      message: label,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
           ),
-        ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 24),
+            const SizedBox(height: 8),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 12),
+            ),
+          ],
+        ),
       ),
     );
   }
