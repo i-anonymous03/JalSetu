@@ -23,13 +23,15 @@ class AppTheme {
     ),
     
     // 2. Typography
+    // Using GoogleFonts.inter() for all styles to ensure proper rendering 
+    // for both English and Hindi characters (Devanagari script support).
     textTheme: GoogleFonts.interTextTheme(
       ThemeData.light().textTheme,
     ).copyWith(
-      displayLarge: const TextStyle(fontSize: 32, fontWeight: FontWeight.w800, color: jalSetuPrimaryBlue),
-      titleMedium: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF1E293B)),
-      bodyLarge: const TextStyle(fontSize: 16, color: Color(0xFF475569)),
-      labelLarge: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      displayLarge: GoogleFonts.inter(fontSize: 32, fontWeight: FontWeight.w800, color: jalSetuPrimaryBlue),
+      titleMedium: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.bold, color: const Color(0xFF1E293B)),
+      bodyLarge: GoogleFonts.inter(fontSize: 16, color: const Color(0xFF475569)),
+      labelLarge: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold),
     ),
 
     // 3. Input Fields (Borderless, White Background)

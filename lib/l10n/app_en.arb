@@ -2,7 +2,7 @@
   "@@locale": "en",
   "appName": "JalSetu",
   
-  // --- AUTH/LOGIN ---
+  "@@authLoginSection": "AUTH/LOGIN",
   "welcomeBack": "Welcome Back",
   "signInInstructions": "Sign in to continue to JalSetu",
   "emailPlaceholder": "Email Address",
@@ -18,7 +18,7 @@
   "enterOtp": "Enter OTP",
   "verifyOtp": "Verify OTP",
 
-  // --- REGISTRATION ---
+  "@@registrationSection": "REGISTRATION",
   "registerTitle": "Register",
   "createAccountTitle": "Create Your JalSetu Account",
   "joinCommunityInstruction": "Join the community to monitor water and health.",
@@ -26,22 +26,28 @@
   "iAmA": "I am a...",
   "roleVillager": "Villager",
   "roleASHAWorker": "ASHA Worker",
+  "roleVolunteer": "Volunteer / Worker",
+  "roleDoctor": "Clinic / Doctor",
+  "roleDescriptionCommunity": "Report symptoms or check water safety.",
+  "roleDescriptionVolunteer": "Collect data & help the community.",
+  "roleDescriptionDoctor": "Monitor reports & issue alerts.",
+  "whoAreYouTitle": "Who are you?",
 
-  // --- NAVIGATION/GENERAL ---
+  "@@navigationGeneralSection": "NAVIGATION/GENERAL",
   "navHome": "Home",
   "navAlerts": "Alerts",
   "navHealth": "Health",
   "navFeedback": "Feedback",
   "navHelp": "Help",
 
-  // --- DASHBOARD/HOMESCREEN ---
+  "@@dashboardHomescreenSection": "DASHBOARD/HOMESCREEN",
   "dashboardTitle": "JalSetu - Dashboard",
   "reportSymptomsButton": "Report Symptoms",
   
-  // --- ALERTS ---
+  "@@alertsSection": "ALERTS",
   "alertsTitle": "Alerts",
 
-  // --- HEALTH REPORTING (SYMPTOMS) ---
+  "@@healthReportingSection": "HEALTH REPORTING (SYMPTOMS)",
   "reportSymptomsTitle": "Report Health Symptoms",
   "symptomSelectPrompt": "Please select the symptoms you are experiencing:",
   "symptomFever": "Fever",
@@ -51,17 +57,17 @@
   "additionalNotesLabel": "Additional Notes (Optional)",
   "submitReportButton": "Submit Report",
 
-  // --- HEALTH SCREEN ---
+  "@@healthScreenSection": "HEALTH SCREEN",
   "waterHealthReportTitle": "Water Health Report",
   "healthAnalysisPlaceholder": "Detailed water health analysis will be shown here.",
 
-  // --- FEEDBACK SCREEN ---
+  "@@feedbackScreenSection": "FEEDBACK SCREEN",
   "feedbackTitle": "Feedback",
   "feedbackLabel": "Your Feedback",
   "submitFeedbackButton": "Submit Feedback",
   "feedbackThankYou": "Thank you for your feedback!",
 
-  // --- HELP SCREEN ---
+  "@@helpScreenSection": "HELP SCREEN",
   "helpSupportTitle": "Help & Support",
   "faqTitle": "FAQs",
   "faqSubtitle": "Frequently Asked Questions",

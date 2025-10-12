@@ -2,7 +2,7 @@
   "@@locale": "hi",
   "appName": "जलसेतु",
   
-  // --- AUTH/LOGIN ---
+  "@@authLoginSection": "AUTH/LOGIN",
   "welcomeBack": "आपका स्वागत है",
   "signInInstructions": "जलसेतु में जारी रखने के लिए साइन इन करें",
   "emailPlaceholder": "ईमेल आईडी",
@@ -12,13 +12,13 @@
   "registerNow": "अभी रजिस्टर करें",
   "orDivider": "या",
   "continueWithGoogle": "Google के साथ जारी रखें",
-  "phoneSignIn": "फ़ोन से साइन इन करें",
+  "phoneSignIn": "फ़ोन से साइन इन करें",
   "enterPhone": "अपना फ़ोन नंबर दर्ज करें",
   "sendCode": "कोड भेजें",
   "enterOtp": "ओटीपी दर्ज करें",
   "verifyOtp": "ओटीपी सत्यापित करें",
 
-  // --- REGISTRATION ---
+  "@@registrationSection": "REGISTRATION",
   "registerTitle": "रजिस्टर करें",
   "createAccountTitle": "अपना जलसेतु खाता बनाएं",
   "joinCommunityInstruction": "जल और स्वास्थ्य की निगरानी के लिए समुदाय में शामिल हों।",
@@ -26,22 +26,22 @@
   "iAmA": "मैं हूँ...",
   "roleVillager": "ग्रामीण",
   "roleASHAWorker": "आशा कार्यकर्ता",
-
-  // --- NAVIGATION/GENERAL ---
+  
+  "@@navigationGeneralSection": "NAVIGATION/GENERAL",
   "navHome": "होम",
   "navAlerts": "अलर्ट",
   "navHealth": "स्वास्थ्य",
   "navFeedback": "फीडबैक",
   "navHelp": "सहायता",
 
-  // --- DASHBOARD/HOMESCREEN ---
+  "@@dashboardHomescreenSection": "DASHBOARD/HOMESCREEN",
   "dashboardTitle": "जलसेतु - डैशबोर्ड",
   "reportSymptomsButton": "लक्षणों की रिपोर्ट करें",
   
-  // --- ALERTS ---
+  "@@alertsSection": "ALERTS",
   "alertsTitle": "अलर्ट",
 
-  // --- HEALTH REPORTING (SYMPTOMS) ---
+  "@@healthReportingSection": "HEALTH REPORTING (SYMPTOMS)",
   "reportSymptomsTitle": "स्वास्थ्य लक्षणों की रिपोर्ट करें",
   "symptomSelectPrompt": "कृपया उन लक्षणों का चयन करें जिनका आप अनुभव कर रहे हैं:",
   "symptomFever": "बुखार",
@@ -51,17 +51,17 @@
   "additionalNotesLabel": "अतिरिक्त नोट्स (वैकल्पिक)",
   "submitReportButton": "रिपोर्ट सबमिट करें",
 
-  // --- HEALTH SCREEN ---
+  "@@healthScreenSection": "HEALTH SCREEN",
   "waterHealthReportTitle": "जल स्वास्थ्य रिपोर्ट",
   "healthAnalysisPlaceholder": "विस्तृत जल स्वास्थ्य विश्लेषण यहाँ दिखाया जाएगा।",
 
-  // --- FEEDBACK SCREEN ---
+  "@@feedbackScreenSection": "FEEDBACK SCREEN",
   "feedbackTitle": "फीडबैक",
   "feedbackLabel": "आपका फीडबैक",
   "submitFeedbackButton": "फीडबैक सबमिट करें",
   "feedbackThankYou": "आपके फीडबैक के लिए धन्यवाद!",
 
-  // --- HELP SCREEN ---
+  "@@helpScreenSection": "HELP SCREEN",
   "helpSupportTitle": "सहायता एवं समर्थन",
   "faqTitle": "अक्सर पूछे जाने वाले प्रश्न",
   "faqSubtitle": "अक्सर पूछे जाने वाले प्रश्न",
