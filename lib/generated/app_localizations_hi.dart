@@ -12,6 +12,16 @@ class AppLocalizationsHi extends AppLocalizations {
   String get appName => 'जलसेतु';
 
   @override
+  String get appTagline => 'हर बूंद सुरक्षित';
+
+  @override
+  String get appTaglineHindi => 'हर बूंद में सुरक्षा';
+
+  @override
+  String get registrationSuccessful =>
+      'पंजीकरण सफल! कृपया जारी रखने के लिए लॉगिन करें।';
+
+  @override
   String get welcomeBack => 'आपका स्वागत है';
 
   @override
@@ -76,23 +86,25 @@ class AppLocalizationsHi extends AppLocalizations {
   String get roleASHAWorker => 'आशा कार्यकर्ता';
 
   @override
-  String get roleVolunteer => 'Volunteer / Worker';
+  String get roleVolunteer => 'स्वयंसेवक / कार्यकर्ता';
 
   @override
-  String get roleDoctor => 'Clinic / Doctor';
+  String get roleDoctor => 'क्लिनिक / डॉक्टर';
 
   @override
   String get roleDescriptionCommunity =>
-      'Report symptoms or check water safety.';
+      'लक्षणों की रिपोर्ट करें या पानी की सुरक्षा की जांच करें।';
 
   @override
-  String get roleDescriptionVolunteer => 'Collect data & help the community.';
+  String get roleDescriptionVolunteer =>
+      'डेटा एकत्र करें और समुदाय की मदद करें।';
 
   @override
-  String get roleDescriptionDoctor => 'Monitor reports & issue alerts.';
+  String get roleDescriptionDoctor =>
+      'रिपोर्ट की निगरानी करें और अलर्ट जारी करें।';
 
   @override
-  String get whoAreYouTitle => 'Who are you?';
+  String get whoAreYouTitle => 'आप कौन हैं?';
 
   @override
   String get navHome => 'होम';

@@ -12,6 +12,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'JalSetu';
 
   @override
+  String get appTagline => 'Every Drop Safe';
+
+  @override
+  String get appTaglineHindi => 'हर बूंद में सुरक्षा';
+
+  @override
+  String get registrationSuccessful =>
+      'Registration successful! Please login to continue.';
+
+  @override
   String get welcomeBack => 'Welcome Back';
 
   @override

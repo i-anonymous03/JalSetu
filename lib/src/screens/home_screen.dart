@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jalsetu/routes.dart';
 import 'package:jalsetu/src/widgets/bottom_nav.dart';
 import 'package:jalsetu/src/widgets/sensor_tile.dart';
+import 'package:jalsetu/src/widgets/language_selector.dart';
+import 'package:jalsetu/generated/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,8 +12,12 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('JalSetu - Dashboard'),
+        title: Text(AppLocalizations.of(context)!.dashboardTitle),
         automaticallyImplyLeading: false,
+        actions: const [
+          LanguageSelector(),
+          SizedBox(width: 8), // Add some padding on the right
+        ],
       ),
       body: GridView.count(
         crossAxisCount: 2,
@@ -30,7 +36,7 @@ class HomeScreen extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).pushNamed(AppRoutes.reportSymptom);
         },
-        label: const Text('Report Symptoms'),
+        label: Text(AppLocalizations.of(context)!.reportSymptomsButton),
         icon: const Icon(Icons.medical_services),
         backgroundColor: Colors.redAccent,
       ),

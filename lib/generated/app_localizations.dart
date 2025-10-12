@@ -104,6 +104,24 @@ abstract class AppLocalizations {
   /// **'JalSetu'**
   String get appName;
 
+  /// No description provided for @appTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Every Drop Safe'**
+  String get appTagline;
+
+  /// No description provided for @appTaglineHindi.
+  ///
+  /// In en, this message translates to:
+  /// **'हर बूंद में सुरक्षा'**
+  String get appTaglineHindi;
+
+  /// No description provided for @registrationSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration successful! Please login to continue.'**
+  String get registrationSuccessful;
+
   /// No description provided for @welcomeBack.
   ///
   /// In en, this message translates to:

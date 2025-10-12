@@ -28,19 +28,29 @@ class LanguageSelector extends StatelessWidget {
       return const SizedBox(width: 48);
     }
 
-    return DropdownButton<Locale>(
-      value: localizationProvider.currentLocale,
-      icon: const Icon(Icons.language, color: Colors.white),
-      elevation: 16,
-      // Match the primary color theme for the dropdown
-      dropdownColor: Theme.of(context).primaryColor, 
-      underline: const SizedBox.shrink(), // Remove the default underline
-      onChanged: (Locale? newLocale) {
-        if (newLocale != null) {
-          // Call the provider method to change the language and persist it
-          localizationProvider.setLocale(newLocale);
-        }
-      },
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: DropdownButton<Locale>(
+        value: localizationProvider.currentLocale,
+        icon: const Icon(
+          Icons.translate,
+          color: Colors.white,
+          size: 24,
+        ),
+        iconSize: 24,
+        elevation: 16,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+        dropdownColor: Theme.of(context).primaryColor.withOpacity(0.9),
+        underline: Container(), // Remove the default underline
+        onChanged: (Locale? newLocale) {
+          if (newLocale != null) {
+            localizationProvider.setLocale(newLocale);
+          }
+        },
       items: LocalizationProvider.supportedLocales
           .map<DropdownMenuItem<Locale>>((Locale locale) {
         return DropdownMenuItem<Locale>(
@@ -55,6 +65,7 @@ class LanguageSelector extends StatelessWidget {
           ),
         );
       }).toList(),
+      ),
     );
   }
 }

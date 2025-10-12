@@ -1,10 +1,1 @@
-{
-  "hi": [
-    "roleVolunteer",
-    "roleDoctor",
-    "roleDescriptionCommunity",
-    "roleDescriptionVolunteer",
-    "roleDescriptionDoctor",
-    "whoAreYouTitle"
-  ]
-}
+{}

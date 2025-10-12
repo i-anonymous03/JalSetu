@@ -27,7 +27,7 @@ android {
         applicationId = "com.nayidisha.jalsetu"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        minSdk = 21 // Minimum SDK version required for Firebase
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -44,4 +44,18 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+
+    // Add the dependency for the Firebase Authentication library
+    implementation("com.google.firebase:firebase-auth")
+
+    // Also add the dependency for the Google Play services library for Google Sign-In
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+    // Add dependency for Firebase Cloud Firestore
+    implementation("com.google.firebase:firebase-firestore")
 }

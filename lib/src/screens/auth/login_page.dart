@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:jalsetu/generated/app_localizations.dart';
 import 'package:jalsetu/routes.dart';
-import 'package:jalsetu/src/services/auth_service.dart';
+import 'package:jalsetu/src/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:jalsetu/src/widgets/loading_overlay.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -12,9 +15,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final AuthService _authService = AuthService();
-  bool _isLoading = false;
-  bool _isGoogleLoading = false;
+  bool _isPasswordVisible = false;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
@@ -40,41 +41,63 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     super.dispose();
   }
 
-  void _login() async {
+  Future<void> _login() async {
     if (!mounted) return;
-    setState(() => _isLoading = true);
 
-    final userCredential = await _authService.signInWithEmail(
-      _emailController.text.trim(),
-      _passwordController.text.trim(),
-    );
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final l10n = AppLocalizations.of(context)!;
     
-    if (!mounted) return;
-    setState(() => _isLoading = false);
-
-    if (userCredential == null && mounted) {
+    try {
+      await authProvider.signIn(
+        _emailController.text.trim(),
+        _passwordController.text.trim(),
+        'community', // Default role, can be changed in profile
+      );
+      
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, authProvider.getHomeRoute());
+      
+    } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Failed to sign in. Please check your credentials.'),
+          content: Text(e.toString()),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
     }
   }
   
-  void _googleSignIn() async {
+  Future<void> _googleSignIn() async {
     if (!mounted) return;
-    setState(() => _isGoogleLoading = true);
-    await _authService.signInWithGoogle();
+
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     
-    if (!mounted) return;
-    setState(() => _isGoogleLoading = false);
+    try {
+      await authProvider.signInWithGoogle('community'); // Default role
+      
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, authProvider.getHomeRoute());
+      
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+          backgroundColor: Theme.of(context).colorScheme.error,
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return Scaffold(
+    final authProvider = Provider.of<AuthProvider>(context);
+    
+    return LoadingOverlay(
+      isLoading: authProvider.isLoading,
+      child: Scaffold(
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -118,8 +141,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   ),
                   const SizedBox(height: 24),
                   ElevatedButton(
-                    onPressed: _isLoading ? null : _login,
-                    child: _isLoading
+                    onPressed: authProvider.isLoading ? null : _login,
+                    child: authProvider.isLoading
                         ? const SizedBox(
                             height: 24,
                             width: 24,
@@ -172,13 +195,10 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   const SizedBox(height: 30),
 
                   // Social Login Buttons
-                  if (_isGoogleLoading)
-                    const Center(child: CircularProgressIndicator())
-                  else
-                    OutlinedButton.icon(
-                      icon: Image.asset('assets/images/google_logo.png', height: 24),
-                      label: const Text('Continue with Google'),
-                      onPressed: _googleSignIn,
+                  OutlinedButton.icon(
+                    icon: Image.asset('assets/images/google_logo.png', height: 24),
+                    label: const Text('Continue with Google'),
+                    onPressed: authProvider.isLoading ? null : _googleSignIn,
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         side: BorderSide(color: Colors.grey.shade300),
@@ -192,6 +212,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
             ),
           ),
         ),
+      ),
       ),
     );
   }
