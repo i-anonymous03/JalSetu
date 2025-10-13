@@ -7,7 +7,12 @@
   
   "@@dashboardSection": "DASHBOARD SCREENS",
   "volunteerDashboardTitle": "स्वयंसेवक डैशबोर्ड",
-  "clinicDashboardTitle": "क्लिनिक डैशबोर्ड",
+  "clinicDashboardTitle": "क्लिनिक डैशबोर्ड"
+    ,"emailRequired": "ईमेल आवश्यक है।"
+    ,"emailInvalid": "कृपया एक मान्य ईमेल पता दर्ज करें।"
+    ,"passwordRequired": "पासवर्ड आवश्यक है।"
+    ,"forgotPassword": "पासवर्ड भूल गए?"
+    ,"featureComingSoon": "फीचर जल्द आ रहा है!",
   "todayStatus": "आज की स्थिति",
   "samplesCollected": "एकत्रित\nनमूने",
   "healthReports": "स्वास्थ्य\nरिपोर्ट",
@@ -37,7 +42,7 @@
   "registeringAccount": "खाता बनाया जा रहा है...",
   "loadingData": "डेटा लोड हो रहा है...",
   "syncingData": "डेटा सिंक हो रहा है...",
-  "pleaseWait": "कृपया प्रतीक्षा करें..."
+  "pleaseWait": "कृपया प्रतीक्षा करें...",
   
   "@@authLoginSection": "AUTH/LOGIN",
   "welcomeBack": "आपका स्वागत है",

@@ -38,7 +38,7 @@ class WelcomeScreen extends StatelessWidget {
                 // Logo and Tagline
                 const SizedBox(height: 48),
                 Image.asset(
-                  'assets/images/logo.png',
+                  'assets/images/jalsetu_logo.png',
                   height: 120,
                 ),
                 const SizedBox(height: 16),

@@ -22,6 +22,105 @@ class AppLocalizationsEn extends AppLocalizations {
       'Registration successful! Please login to continue.';
 
   @override
+  String get volunteerDashboardTitle => 'Volunteer Dashboard';
+
+  @override
+  String get clinicDashboardTitle => 'Clinic Dashboard';
+
+  @override
+  String get emailRequired => 'Email is required.';
+
+  @override
+  String get emailInvalid => 'Please enter a valid email address.';
+
+  @override
+  String get passwordRequired => 'Password is required.';
+
+  @override
+  String get forgotPassword => 'Forgot Password?';
+
+  @override
+  String get featureComingSoon => 'Feature coming soon!';
+
+  @override
+  String get todayStatus => 'Today\'s Status';
+
+  @override
+  String get samplesCollected => 'Samples\nCollected';
+
+  @override
+  String get healthReports => 'Health\nReports';
+
+  @override
+  String get pendingAlerts => 'Pending\nAlerts';
+
+  @override
+  String get quickActions => 'Quick Actions';
+
+  @override
+  String get collectWaterSample => 'Collect Water Sample';
+
+  @override
+  String get submitReport => 'Submit Report';
+
+  @override
+  String get communityVisit => 'Community Visit';
+
+  @override
+  String get syncData => 'Sync Data';
+
+  @override
+  String get recentActivity => 'Recent Activity';
+
+  @override
+  String get reportEmergency => 'Report Emergency';
+
+  @override
+  String get activeCases => 'Active Cases';
+
+  @override
+  String get areasMonitored => 'Areas Monitored';
+
+  @override
+  String get recentHealthAlerts => 'Recent Health Alerts';
+
+  @override
+  String get issueHealthAdvisory => 'Issue Health Advisory';
+
+  @override
+  String get viewReports => 'View Reports';
+
+  @override
+  String get areaAnalysis => 'Area Analysis';
+
+  @override
+  String get patientRecords => 'Patient Records';
+
+  @override
+  String get viewDetails => 'View Details';
+
+  @override
+  String get takeAction => 'Take Action';
+
+  @override
+  String get emergencyResponse => 'Emergency Response';
+
+  @override
+  String get signingIn => 'Signing in...';
+
+  @override
+  String get registeringAccount => 'Creating your account...';
+
+  @override
+  String get loadingData => 'Loading data...';
+
+  @override
+  String get syncingData => 'Syncing data...';
+
+  @override
+  String get pleaseWait => 'Please wait...';
+
+  @override
   String get welcomeBack => 'Welcome Back';
 
   @override

@@ -27,7 +27,7 @@ android {
         applicationId = "com.nayidisha.jalsetu"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 21 // Minimum SDK version required for Firebase
+        minSdk = flutter.minSdkVersion // Minimum SDK version required for Firebase
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

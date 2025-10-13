@@ -12,25 +12,33 @@ class LocalizationProvider with ChangeNotifier {
   static const String _languageCodeKey = 'language_code';
 
   Locale? _currentLocale;
+  bool _isLoading = true;
 
   Locale? get currentLocale => _currentLocale;
+  bool get isLoading => _isLoading;
 
   LocalizationProvider() {
+    // Set default locale immediately to prevent flicker
+    _currentLocale = const Locale('en');
     _loadPreferredLocale();
   }
 
   // Load the saved language code from Shared Preferences
   Future<void> _loadPreferredLocale() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String? savedCode = prefs.getString(_languageCodeKey);
-    
-    if (savedCode != null) {
-      _currentLocale = Locale(savedCode);
-    } else {
-      // Default to English if nothing is saved
-      _currentLocale = const Locale('en'); 
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String? savedCode = prefs.getString(_languageCodeKey);
+      
+      if (savedCode != null && savedCode != _currentLocale?.languageCode) {
+        _currentLocale = Locale(savedCode);
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint('Error loading locale: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   // Change the application locale

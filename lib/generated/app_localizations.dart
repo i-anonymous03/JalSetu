@@ -122,6 +122,204 @@ abstract class AppLocalizations {
   /// **'Registration successful! Please login to continue.'**
   String get registrationSuccessful;
 
+  /// No description provided for @volunteerDashboardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Volunteer Dashboard'**
+  String get volunteerDashboardTitle;
+
+  /// No description provided for @clinicDashboardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinic Dashboard'**
+  String get clinicDashboardTitle;
+
+  /// No description provided for @emailRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required.'**
+  String get emailRequired;
+
+  /// No description provided for @emailInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address.'**
+  String get emailInvalid;
+
+  /// No description provided for @passwordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required.'**
+  String get passwordRequired;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgotPassword;
+
+  /// No description provided for @featureComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Feature coming soon!'**
+  String get featureComingSoon;
+
+  /// No description provided for @todayStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Status'**
+  String get todayStatus;
+
+  /// No description provided for @samplesCollected.
+  ///
+  /// In en, this message translates to:
+  /// **'Samples\nCollected'**
+  String get samplesCollected;
+
+  /// No description provided for @healthReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Health\nReports'**
+  String get healthReports;
+
+  /// No description provided for @pendingAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending\nAlerts'**
+  String get pendingAlerts;
+
+  /// No description provided for @quickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get quickActions;
+
+  /// No description provided for @collectWaterSample.
+  ///
+  /// In en, this message translates to:
+  /// **'Collect Water Sample'**
+  String get collectWaterSample;
+
+  /// No description provided for @submitReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Report'**
+  String get submitReport;
+
+  /// No description provided for @communityVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'Community Visit'**
+  String get communityVisit;
+
+  /// No description provided for @syncData.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Data'**
+  String get syncData;
+
+  /// No description provided for @recentActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Activity'**
+  String get recentActivity;
+
+  /// No description provided for @reportEmergency.
+  ///
+  /// In en, this message translates to:
+  /// **'Report Emergency'**
+  String get reportEmergency;
+
+  /// No description provided for @activeCases.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Cases'**
+  String get activeCases;
+
+  /// No description provided for @areasMonitored.
+  ///
+  /// In en, this message translates to:
+  /// **'Areas Monitored'**
+  String get areasMonitored;
+
+  /// No description provided for @recentHealthAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Health Alerts'**
+  String get recentHealthAlerts;
+
+  /// No description provided for @issueHealthAdvisory.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue Health Advisory'**
+  String get issueHealthAdvisory;
+
+  /// No description provided for @viewReports.
+  ///
+  /// In en, this message translates to:
+  /// **'View Reports'**
+  String get viewReports;
+
+  /// No description provided for @areaAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Area Analysis'**
+  String get areaAnalysis;
+
+  /// No description provided for @patientRecords.
+  ///
+  /// In en, this message translates to:
+  /// **'Patient Records'**
+  String get patientRecords;
+
+  /// No description provided for @viewDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'View Details'**
+  String get viewDetails;
+
+  /// No description provided for @takeAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Take Action'**
+  String get takeAction;
+
+  /// No description provided for @emergencyResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency Response'**
+  String get emergencyResponse;
+
+  /// No description provided for @signingIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Signing in...'**
+  String get signingIn;
+
+  /// No description provided for @registeringAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating your account...'**
+  String get registeringAccount;
+
+  /// No description provided for @loadingData.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading data...'**
+  String get loadingData;
+
+  /// No description provided for @syncingData.
+  ///
+  /// In en, this message translates to:
+  /// **'Syncing data...'**
+  String get syncingData;
+
+  /// No description provided for @pleaseWait.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait...'**
+  String get pleaseWait;
+
   /// No description provided for @welcomeBack.
   ///
   /// In en, this message translates to:

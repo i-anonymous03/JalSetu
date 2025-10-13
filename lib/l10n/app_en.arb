@@ -8,6 +8,11 @@
   "@@dashboardSection": "DASHBOARD SCREENS",
   "volunteerDashboardTitle": "Volunteer Dashboard",
   "clinicDashboardTitle": "Clinic Dashboard",
+    "emailRequired": "Email is required.",
+    "emailInvalid": "Please enter a valid email address.",
+    "passwordRequired": "Password is required.",
+    "forgotPassword": "Forgot Password?",
+    "featureComingSoon": "Feature coming soon!",
   "todayStatus": "Today's Status",
   "samplesCollected": "Samples\nCollected",
   "healthReports": "Health\nReports",
@@ -37,7 +42,7 @@
   "registeringAccount": "Creating your account...",
   "loadingData": "Loading data...",
   "syncingData": "Syncing data...",
-  "pleaseWait": "Please wait..."
+  "pleaseWait": "Please wait...",
   
   "@@authLoginSection": "AUTH/LOGIN",
   "welcomeBack": "Welcome Back",

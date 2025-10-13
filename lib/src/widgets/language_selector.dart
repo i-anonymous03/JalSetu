@@ -30,6 +30,11 @@ class LanguageSelector extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 4),
       child: DropdownButton<Locale>(
         value: localizationProvider.currentLocale,
         icon: const Icon(
@@ -44,27 +49,27 @@ class LanguageSelector extends StatelessWidget {
           fontSize: 16,
           fontWeight: FontWeight.w500,
         ),
-        dropdownColor: Theme.of(context).primaryColor.withOpacity(0.9),
+        dropdownColor: Colors.black,
         underline: Container(), // Remove the default underline
         onChanged: (Locale? newLocale) {
           if (newLocale != null) {
             localizationProvider.setLocale(newLocale);
           }
         },
-      items: LocalizationProvider.supportedLocales
-          .map<DropdownMenuItem<Locale>>((Locale locale) {
-        return DropdownMenuItem<Locale>(
-          value: locale,
-          child: Text(
-            _getLanguageName(locale),
-            style: const TextStyle(
-              color: Colors.white, 
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
+        items: LocalizationProvider.supportedLocales
+            .map<DropdownMenuItem<Locale>>((Locale locale) {
+          return DropdownMenuItem<Locale>(
+            value: locale,
+            child: Text(
+              _getLanguageName(locale),
+              style: const TextStyle(
+                color: Colors.white, 
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-          ),
-        );
-      }).toList(),
+          );
+        }).toList(),
       ),
     );
   }

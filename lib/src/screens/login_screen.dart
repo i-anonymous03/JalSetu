@@ -43,18 +43,9 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void _handleForgotPassword() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Password reset feature coming soon!'),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    
     String getRoleTitle() {
       switch (widget.role) {
         case 'community':
@@ -67,14 +58,15 @@ class _LoginScreenState extends State<LoginScreen> {
           return '';
       }
     }
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('${l10n.signInButton} - ${getRoleTitle()}'),
+        backgroundColor: Colors.black,
+        title: Text('${l10n.signInButton} - ${getRoleTitle()}', style: const TextStyle(color: Colors.white)),
         actions: const [
           LanguageSelector(),
           SizedBox(width: 8),
         ],
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
@@ -95,7 +87,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 32),
-
               // Email Field
               TextFormField(
                 controller: _emailController,
@@ -107,13 +98,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
+                    return l10n.emailRequired;
                   }
+                  final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+');
+                  if (!emailRegex.hasMatch(value)) return l10n.emailInvalid;
                   return null;
                 },
               ),
               const SizedBox(height: 16),
-
               // Password Field
               TextFormField(
                 controller: _passwordController,
@@ -122,9 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   labelText: l10n.passwordPlaceholder,
                   prefixIcon: const Icon(Icons.lock),
                   suffixIcon: IconButton(
-                    icon: Icon(
-                      _isPasswordVisible ? Icons.visibility_off : Icons.visibility,
-                    ),
+                    icon: Icon(_isPasswordVisible ? Icons.visibility_off : Icons.visibility),
                     onPressed: () {
                       setState(() {
                         _isPasswordVisible = !_isPasswordVisible;
@@ -135,59 +125,75 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
+                    return l10n.passwordRequired;
                   }
                   return null;
                 },
               ),
               const SizedBox(height: 8),
-
               // Forgot Password
               TextButton(
-                onPressed: _handleForgotPassword,
+                onPressed: () {}, // TODO: Implement forgot password
                 child: Text(
-                  'Forgot Password?',
+                  l10n.forgotPassword,
                   style: TextStyle(color: Theme.of(context).primaryColor),
                 ),
               ),
               const SizedBox(height: 24),
-
               // Login Button
               SizedBox(
                 height: 50,
-                child: ElevatedButton(
-                  onPressed: _handleLogin,
+                child: ElevatedButton.icon(
+                  icon: const Icon(Icons.email),
+                  label: Text(l10n.signInButton),
                   style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
                   ),
-                  child: Text(l10n.signInButton),
+                  onPressed: _handleLogin,
                 ),
               ),
+              const SizedBox(height: 24),
+              // Divider
+              Row(
+                children: [
+                  Expanded(child: Divider()),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(l10n.orDivider),
+                  ),
+                  Expanded(child: Divider()),
+                ],
+              ),
+              const SizedBox(height: 24),
+              // Phone Login
+              ElevatedButton.icon(
+                icon: const Icon(Icons.phone),
+                label: Text(l10n.phoneSignIn),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                onPressed: () {
+                  // TODO: Implement phone login with OTP
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(l10n.featureComingSoon)),
+                  );
+                },
+              ),
               const SizedBox(height: 16),
-
-              // Google Sign In (for staff and doctors)
-              if (widget.role != 'community') ...[
-                OutlinedButton.icon(
-                  onPressed: () {
-                    // TODO: Implement Google Sign In
-                  },
-                  icon: Image.asset(
-                    'assets/images/google_logo.png',
-                    height: 24,
-                  ),
-                  label: Text(l10n.continueWithGoogle),
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.all(16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-              ],
-
+              // Google Login
+              ElevatedButton.icon(
+                icon: const Icon(Icons.g_mobiledata),
+                label: Text(l10n.continueWithGoogle),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                onPressed: () {
+                  // TODO: Implement Google Sign-In
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(l10n.featureComingSoon)),
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
               // Register Link
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

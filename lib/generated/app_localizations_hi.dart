@@ -22,6 +22,105 @@ class AppLocalizationsHi extends AppLocalizations {
       'पंजीकरण सफल! कृपया जारी रखने के लिए लॉगिन करें।';
 
   @override
+  String get volunteerDashboardTitle => 'स्वयंसेवक डैशबोर्ड';
+
+  @override
+  String get clinicDashboardTitle => 'क्लिनिक डैशबोर्ड';
+
+  @override
+  String get emailRequired => 'ईमेल आवश्यक है।';
+
+  @override
+  String get emailInvalid => 'कृपया एक मान्य ईमेल पता दर्ज करें।';
+
+  @override
+  String get passwordRequired => 'पासवर्ड आवश्यक है।';
+
+  @override
+  String get forgotPassword => 'पासवर्ड भूल गए?';
+
+  @override
+  String get featureComingSoon => 'फीचर जल्द आ रहा है!';
+
+  @override
+  String get todayStatus => 'आज की स्थिति';
+
+  @override
+  String get samplesCollected => 'एकत्रित\nनमूने';
+
+  @override
+  String get healthReports => 'स्वास्थ्य\nरिपोर्ट';
+
+  @override
+  String get pendingAlerts => 'लंबित\nअलर्ट';
+
+  @override
+  String get quickActions => 'त्वरित कार्य';
+
+  @override
+  String get collectWaterSample => 'पानी का नमूना लें';
+
+  @override
+  String get submitReport => 'रिपोर्ट जमा करें';
+
+  @override
+  String get communityVisit => 'समुदाय यात्रा';
+
+  @override
+  String get syncData => 'डेटा सिंक करें';
+
+  @override
+  String get recentActivity => 'हाल की गतिविधि';
+
+  @override
+  String get reportEmergency => 'आपातकाल की सूचना दें';
+
+  @override
+  String get activeCases => 'सक्रिय मामले';
+
+  @override
+  String get areasMonitored => 'निगरानी क्षेत्र';
+
+  @override
+  String get recentHealthAlerts => 'हाल के स्वास्थ्य अलर्ट';
+
+  @override
+  String get issueHealthAdvisory => 'स्वास्थ्य सलाह जारी करें';
+
+  @override
+  String get viewReports => 'रिपोर्ट देखें';
+
+  @override
+  String get areaAnalysis => 'क्षेत्र विश्लेषण';
+
+  @override
+  String get patientRecords => 'रोगी रिकॉर्ड';
+
+  @override
+  String get viewDetails => 'विवरण देखें';
+
+  @override
+  String get takeAction => 'कार्रवाई करें';
+
+  @override
+  String get emergencyResponse => 'आपातकालीन प्रतिक्रिया';
+
+  @override
+  String get signingIn => 'साइन इन हो रहा है...';
+
+  @override
+  String get registeringAccount => 'खाता बनाया जा रहा है...';
+
+  @override
+  String get loadingData => 'डेटा लोड हो रहा है...';
+
+  @override
+  String get syncingData => 'डेटा सिंक हो रहा है...';
+
+  @override
+  String get pleaseWait => 'कृपया प्रतीक्षा करें...';
+
+  @override
   String get welcomeBack => 'आपका स्वागत है';
 
   @override

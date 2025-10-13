@@ -18,6 +18,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
   final _scrollController = ScrollController();
   bool _isPasswordVisible = false;
+  bool _otpSent = false;
+  final _otpController = TextEditingController();
 
   // Common Fields
   final _nameController = TextEditingController();
@@ -37,20 +39,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   void dispose() {
-    _nameController.dispose();
-    _phoneController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _genderController.dispose();
-    _ageController.dispose();
-    _villageController.dispose();
-    _govtIdController.dispose();
-    _areaController.dispose();
-    _clinicNameController.dispose();
-    _roleController.dispose();
-    _availabilityController.dispose();
-    _scrollController.dispose();
-    super.dispose();
+  _nameController.dispose();
+  _phoneController.dispose();
+  _emailController.dispose();
+  _passwordController.dispose();
+  _genderController.dispose();
+  _ageController.dispose();
+  _villageController.dispose();
+  _govtIdController.dispose();
+  _areaController.dispose();
+  _clinicNameController.dispose();
+  _roleController.dispose();
+  _availabilityController.dispose();
+  _otpController.dispose();
+  _scrollController.dispose();
+  super.dispose();
   }
 
   Future<void> _handleRegister() async {
@@ -307,156 +310,204 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     return LoadingOverlay(
       isLoading: authProvider.isLoading,
       child: Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.registerTitle),
-        actions: const [
-          LanguageSelector(),
-          SizedBox(width: 8),
-        ],
-      ),
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        padding: const EdgeInsets.all(24.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                l10n.createAccountTitle,
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                l10n.joinCommunityInstruction,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.grey[600],
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: Text(l10n.registerTitle, style: const TextStyle(color: Colors.white)),
+          actions: const [
+            LanguageSelector(),
+            SizedBox(width: 8),
+          ],
+          iconTheme: const IconThemeData(color: Colors.white),
+        ),
+        body: SingleChildScrollView(
+          controller: _scrollController,
+          padding: const EdgeInsets.all(24.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  l10n.createAccountTitle,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
-              ),
-              const SizedBox(height: 32),
-
-              // Common Fields
-              TextFormField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Full Name',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your name';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-
-              // Role-specific Fields
-              _buildRoleSpecificFields(),
-              const SizedBox(height: 16),
-
-              // Contact Information
-              TextFormField(
-                controller: _phoneController,
-                keyboardType: TextInputType.phone,
-                decoration: const InputDecoration(
-                  labelText: 'Phone Number',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your phone number';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-
-              TextFormField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  labelText: 'Email Address',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  if (!_isValidEmail(value)) {
-                    return 'Please enter a valid email address';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-
-              // Password
-              TextFormField(
-                controller: _passwordController,
-                obscureText: !_isPasswordVisible,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  border: const OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _isPasswordVisible ? Icons.visibility_off : Icons.visibility,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
+                const SizedBox(height: 8),
+                Text(
+                  l10n.joinCommunityInstruction,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: Colors.grey[600],
                   ),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a password';
-                  }
-                  if (value.length < 6) {
-                    return 'Password must be at least 6 characters';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 32),
+                const SizedBox(height: 32),
 
-              // Register Button
-              SizedBox(
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: _handleRegister,
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
+                // Common Fields
+                TextFormField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    labelText: l10n.roleVillager, // Localized label
+                    border: const OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return l10n.emailRequired; // Reuse localization
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+
+                // Role-specific Fields
+                _buildRoleSpecificFields(),
+                const SizedBox(height: 16),
+
+                // Contact Information
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: _phoneController,
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          labelText: l10n.enterPhone,
+                          border: const OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return l10n.emailRequired;
+                          }
+                          if (value.length != 10 || int.tryParse(value) == null) {
+                            return l10n.emailInvalid;
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _otpSent = true;
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(l10n.sendCode)),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                      child: Text(l10n.sendCode),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                if (_otpSent) ...[
+                  TextFormField(
+                    controller: _otpController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: l10n.enterOtp,
+                      border: const OutlineInputBorder(),
                     ),
                   ),
-                  child: Text(l10n.registerTitle),
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // Login Link
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Already have an account?'),
-                  TextButton(
+                  const SizedBox(height: 8),
+                  ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(
-                        context,
-                        '/login',
-                        arguments: widget.role,
+                      // TODO: Implement OTP verification logic
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(l10n.verifyOtp)),
                       );
                     },
-                    child: Text(l10n.signInButton),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                    child: Text(l10n.verifyOtp),
                   ),
+                  const SizedBox(height: 16),
                 ],
-              ),
-            ],
+
+                TextFormField(
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: l10n.emailPlaceholder,
+                    border: const OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return l10n.emailRequired;
+                    }
+                    if (!_isValidEmail(value)) {
+                      return l10n.emailInvalid;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+
+                // Password
+                TextFormField(
+                  controller: _passwordController,
+                  obscureText: !_isPasswordVisible,
+                  decoration: InputDecoration(
+                    labelText: l10n.passwordPlaceholder,
+                    border: const OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible ? Icons.visibility_off : Icons.visibility,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return l10n.passwordRequired;
+                    }
+                    if (value.length < 6) {
+                      return l10n.featureComingSoon; // Use as placeholder
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 32),
+
+                // Register Button
+                SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: _handleRegister,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                    ),
+                    child: Text(l10n.registerTitle),
+                  ),
+                ),
+                const SizedBox(height: 16),
+
+                // Login Link
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(l10n.dontHaveAccount),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(
+                          context,
+                          '/login',
+                          arguments: widget.role,
+                        );
+                      },
+                      child: Text(l10n.signInButton),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
       ),
     );
   }
