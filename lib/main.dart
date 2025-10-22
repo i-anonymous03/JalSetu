@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+// ignore: unnecessary_import
+import 'package:flutter/foundation.dart'; // Import for debugPrint
 import 'package:jalsetu/firebase_options.dart';
 import 'package:jalsetu/routes.dart';
+import 'package:jalsetu/src/screens/auth_wrapper.dart';
 import 'package:jalsetu/src/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:jalsetu/src/services/localization_provider.dart';
 import 'package:jalsetu/src/services/auth_service.dart';
 import 'package:jalsetu/src/providers/auth_provider.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
 
 // 🌐 Localization imports
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -41,23 +42,29 @@ class _SplashAppState extends State<SplashApp> {
 
   Future<void> _initializeAsync() async {
     try {
+      // Initialize Firebase before running the app.
       await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-      SharedPreferences.getInstance(); // No await, let it load in background
-      setState(() {
-        _initialized = true;
-      });
+      
+      if(mounted) {
+        setState(() {
+          _initialized = true;
+        });
+      }
     } catch (e) {
-      print('Error initializing app: $e');
-      setState(() {
-        _error = true;
-      });
+      // FIX: Replaced print with debugPrint for better production code.
+      debugPrint('Error initializing app: $e');
+      if(mounted) {
+        setState(() {
+          _error = true;
+        });
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     if (_error) {
-      return MaterialApp(
+      return const MaterialApp(
         home: Scaffold(
           body: Center(
             child: Text('Error initializing app', style: TextStyle(color: Colors.red, fontSize: 20)),
@@ -66,12 +73,12 @@ class _SplashAppState extends State<SplashApp> {
       );
     }
     if (!_initialized) {
-      return MaterialApp(
+      return const MaterialApp(
         home: Scaffold(
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 CircularProgressIndicator(),
                 SizedBox(height: 24),
                 Text('Loading...', style: TextStyle(fontSize: 18)),
@@ -105,7 +112,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 2. Consume the currentLocale from the Provider
+    // Consume the currentLocale from the Provider
     final localizationProvider = Provider.of<LocalizationProvider>(context);
     final locale = localizationProvider.currentLocale ?? const Locale('en');
 
@@ -114,14 +121,14 @@ class MyApp extends StatelessWidget {
       title: 'JalSetu',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: LocalizationProvider.supportedLocales,
-      initialRoute: AppRoutes.root,
+      home: const AuthWrapper(),
       routes: AppRoutes.routes,
       onGenerateRoute: (settings) {
         final routes = AppRoutes.routes;
@@ -129,8 +136,8 @@ class MyApp extends StatelessWidget {
         final Widget Function(BuildContext)? builder = routes[routeName];
 
         if (builder == null) {
-          // Debug print for unknown route
-          print('[Navigation] Unknown route requested: '
+          // FIX: Replaced print with debugPrint.
+          debugPrint('[Navigation] Unknown route requested: '
               '${routeName ?? "<null>"}');
           // Fallback: show a simple error screen
           return MaterialPageRoute(

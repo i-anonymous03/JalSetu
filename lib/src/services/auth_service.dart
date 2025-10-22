@@ -1,141 +1,168 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // Stream for auth state changes to listen for login/logout
+  // Mobile-only Google sign-in
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: ['email', 'profile'],
+  );
+
+  // Auth state listener
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
-  // Get the current user
+  // Get current user
   User? get currentUser => _firebaseAuth.currentUser;
 
-  // Get user role
-  Future<String?> getUserRole(String uid) async {
+  // ------------------ EMAIL SIGN-IN ------------------
+  Future<UserCredential> signInWithEmailAndPassword(
+      String email, String password) async {
     try {
-      final doc = await _firestore.collection('users').doc(uid).get();
-      return doc.data()?['role'] as String?;
-    } catch (e) {
-      print('Error getting user role: $e');
-      return null;
-    }
-  }
-
-  // Sign in with Email and Password
-  Future<UserCredential> signInWithEmailAndPassword(String email, String password) async {
-    try {
-      final credential = await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      return credential;
+      return await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      throw _handleAuthException(e);
+      debugPrint('Email sign-in error: ${e.message}');
+      rethrow;
     }
   }
 
-  // Register with Email and Password
+  // ------------------ EMAIL REGISTER ------------------
   Future<UserCredential> registerWithEmailAndPassword(
-    String email,
-    String password,
-    String role,
-    Map<String, dynamic> userData,
-  ) async {
+      String email, String password, String role, Map<String, dynamic> userData) async {
     try {
-      final credential = await _firebaseAuth.createUserWithEmailAndPassword(
+      final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      // Add user data to Firestore
-      await _firestore.collection('users').doc(credential.user!.uid).set({
-        'email': email,
-        'role': role,
-        'createdAt': FieldValue.serverTimestamp(),
-        ...userData,
-      });
-
-      return credential;
-    } on FirebaseAuthException catch (e) {
-      throw _handleAuthException(e);
-    }
-  }
-
-  // Sign in with Google
-  Future<UserCredential> signInWithGoogle(String role) async {
-    try {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) throw 'Google sign in was cancelled';
-
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      final userCredential = await _firebaseAuth.signInWithCredential(credential);
-
-      // Check if this is a new user
-      final userDoc = await _firestore.collection('users').doc(userCredential.user!.uid).get();
-      if (!userDoc.exists) {
-        // Create new user document
-        await _firestore.collection('users').doc(userCredential.user!.uid).set({
-          'email': userCredential.user!.email,
+      final user = userCredential.user;
+      if (user != null) {
+        await _firestore.collection('users').doc(user.uid).set({
+          'uid': user.uid,
+          'email': user.email,
           'role': role,
+          ...userData,
           'createdAt': FieldValue.serverTimestamp(),
-          'displayName': userCredential.user!.displayName,
-          'photoURL': userCredential.user!.photoURL,
         });
       }
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
-      throw _handleAuthException(e);
+      debugPrint('Email registration error: ${e.message}');
+      rethrow;
     }
   }
 
-  // Reset Password
+  // ------------------ GOOGLE SIGN-IN ------------------
+  Future<UserCredential> signInWithGoogle(String role) async {
+    try {
+      // Trigger Google sign-in
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) {
+        throw FirebaseAuthException(
+          code: 'USER_CANCELLED',
+          message: 'Sign-in was cancelled by the user.',
+        );
+      }
+
+      // Obtain auth details
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      // Create credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      // Sign in to Firebase
+      final userCredential =
+          await _firebaseAuth.signInWithCredential(credential);
+
+      // Store user data in Firestore (if new)
+      final user = userCredential.user;
+      if (user != null) {
+        final userDoc = _firestore.collection('users').doc(user.uid);
+        final snapshot = await userDoc.get();
+        if (!snapshot.exists) {
+          await userDoc.set({
+            'uid': user.uid,
+            'email': user.email,
+            'displayName': user.displayName,
+            'photoURL': user.photoURL,
+            'role': role,
+            'createdAt': FieldValue.serverTimestamp(),
+          });
+        }
+      }
+
+      return userCredential;
+    } catch (e) {
+      debugPrint('Google sign-in error: $e');
+      rethrow;
+    }
+  }
+
+  // ------------------ SIGN OUT ------------------
+  Future<void> signOut() async {
+    try {
+      await _googleSignIn.signOut(); // Disconnect Google session
+      await _firebaseAuth.signOut();
+    } catch (e) {
+      debugPrint('Sign-out error: $e');
+      rethrow;
+    }
+  }
+
+  // ------------------ RESET PASSWORD ------------------
   Future<void> resetPassword(String email) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
-      throw _handleAuthException(e);
+      debugPrint('Password reset error: ${e.message}');
+      rethrow;
     }
   }
 
-  // Sign out
-  Future<void> signOut() async {
+  // ------------------ GET USER ROLE ------------------
+  Future<String?> getUserRole(String uid) async {
     try {
-      await Future.wait([
-        _googleSignIn.signOut(),
-        _firebaseAuth.signOut(),
-      ]);
+      final doc = await _firestore.collection('users').doc(uid).get();
+      if (doc.exists) {
+        return doc.data()?['role'] as String?;
+      }
+      return null;
     } catch (e) {
-      throw Exception('Error signing out: $e');
+      debugPrint('Error getting user role: $e');
+      return null;
     }
   }
 
-  // Handle Authentication Exceptions
-  String _handleAuthException(FirebaseAuthException e) {
-    switch (e.code) {
-      case 'user-not-found':
-        return 'No user found with this email.';
-      case 'wrong-password':
-        return 'Wrong password provided.';
-      case 'email-already-in-use':
-        return 'Email is already registered.';
-      case 'invalid-email':
-        return 'Invalid email address.';
-      case 'weak-password':
-        return 'Password is too weak.';
-      case 'operation-not-allowed':
-        return 'This authentication method is not enabled.';
-      default:
-        return 'An error occurred: ${e.message}';
+  // ------------------ UPDATE PROFILE ------------------
+  Future<void> updateUserProfile(String uid, Map<String, dynamic> updates) async {
+    try {
+      await _firestore.collection('users').doc(uid).update(updates);
+    } catch (e) {
+      debugPrint('Error updating user profile: $e');
+      rethrow;
+    }
+  }
+
+  // ------------------ DELETE ACCOUNT ------------------
+  Future<void> deleteUserAccount() async {
+    try {
+      final user = _firebaseAuth.currentUser;
+      if (user != null) {
+        await _firestore.collection('users').doc(user.uid).delete();
+        await user.delete();
+      }
+    } catch (e) {
+      debugPrint('Error deleting user account: $e');
+      rethrow;
     }
   }
 }
-

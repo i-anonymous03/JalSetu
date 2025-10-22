@@ -1,49 +1,66 @@
 import 'package:flutter/material.dart';
 
-class CustomPageRoute<T> extends PageRouteBuilder<T> {
-  final Widget child;
-  final RouteSettings settings;
+class FadePageRoute<T> extends PageRoute<T> {
+  @override
+  RouteSettings get settings => super.settings;
 
-  CustomPageRoute({
-    required this.child,
-    required this.settings,
+  FadePageRoute({
+    required this.builder,
+    RouteSettings? settings,
+  }) : super(settings: settings, fullscreenDialog: false);
+
+  final WidgetBuilder builder;
+
+  @override
+  bool get opaque => false;
+
+  @override
+  Color? get barrierColor => null;
+
+  @override
+  String? get barrierLabel => null;
+
+  @override
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
+    final result = builder(context);
+    return FadeTransition(
+      opacity: Tween<double>(begin: 0.0, end: 1.0).animate(animation),
+      child: Semantics(
+        scopesRoute: true,
+        explicitChildNodes: true,
+        child: result,
+      ),
+    );
+  }
+
+  @override
+  bool get maintainState => true;
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 450);
+}
+
+class SlidePageRoute<T> extends PageRouteBuilder<T> {
+  @override
+  RouteSettings get settings => super.settings;
+
+  SlidePageRoute({
+    required Widget page,
+    RouteSettings? settings,
+    Offset begin = const Offset(1.0, 0.0),
+    Offset end = Offset.zero,
+    Curve curve = Curves.ease,
   }) : super(
           settings: settings,
-          pageBuilder: (context, animation, secondaryAnimation) => child,
+          pageBuilder: (context, animation, secondaryAnimation) => page,
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(1.0, 0.0);
-            const end = Offset.zero;
-            const curve = Curves.easeInOutCubic;
-
-            var tween = Tween(begin: begin, end: end).chain(
-              CurveTween(curve: curve),
-            );
-
+            final tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
             return SlideTransition(
               position: animation.drive(tween),
               child: child,
             );
           },
-          transitionDuration: const Duration(milliseconds: 300),
-        );
-}
-
-class FadePageRoute<T> extends PageRouteBuilder<T> {
-  final Widget child;
-  final RouteSettings settings;
-
-  FadePageRoute({
-    required this.child,
-    required this.settings,
-  }) : super(
-          settings: settings,
-          pageBuilder: (context, animation, secondaryAnimation) => child,
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: animation,
-              child: child,
-            );
-          },
-          transitionDuration: const Duration(milliseconds: 300),
         );
 }

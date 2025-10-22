@@ -57,9 +57,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   Future<void> _handleRegister() async {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
+    if(l10n == null) return; // Guard against null localizations
     
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState?.validate() ?? false) {
       try {
         // Prepare user data based on role
         final Map<String, dynamic> userData = {
@@ -304,8 +305,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    // FIX: Make l10n nullable and add a guard clause.
+    final l10n = AppLocalizations.of(context);
     final authProvider = Provider.of<AuthProvider>(context);
+    
+    if (l10n == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
 
     return LoadingOverlay(
       isLoading: authProvider.isLoading,
@@ -464,7 +470,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       return l10n.passwordRequired;
                     }
                     if (value.length < 6) {
-                      return l10n.featureComingSoon; // Use as placeholder
+                      return 'Password must be at least 6 characters';
                     }
                     return null;
                   },

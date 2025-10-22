@@ -7,7 +7,12 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    // FIX: Make l10n nullable and add a guard clause.
+    final l10n = AppLocalizations.of(context);
+    if (l10n == null) {
+      // Return a loading indicator while localizations are loading.
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
     
     return Scaffold(
       appBar: AppBar(

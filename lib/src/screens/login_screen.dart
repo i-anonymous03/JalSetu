@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _handleLogin() {
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState?.validate() ?? false) {
       // TODO: Implement actual login logic
       String route = '';
       switch (widget.role) {
@@ -45,7 +45,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    // FIX: Make l10n nullable and add a guard clause.
+    final l10n = AppLocalizations.of(context);
+    if (l10n == null) {
+      // Return a loading indicator while localizations are loading.
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
     String getRoleTitle() {
       switch (widget.role) {
         case 'community':
@@ -159,12 +165,12 @@ class _LoginScreenState extends State<LoginScreen> {
               // Divider
               Row(
                 children: [
-                  Expanded(child: Divider()),
+                  const Expanded(child: Divider()),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(l10n.orDivider),
                   ),
-                  Expanded(child: Divider()),
+                  const Expanded(child: Divider()),
                 ],
               ),
               const SizedBox(height: 24),

@@ -10,7 +10,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Safely get localizations. If they are not available yet, provide fallbacks.
+    final l10n = AppLocalizations.of(context);
     bool isGuest = true; // TODO: Replace with actual auth check
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -32,7 +35,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             Text(
-              AppLocalizations.of(context)?.dashboardTitle ?? 'JalSetu',
+              l10n?.dashboardTitle ?? 'JalSetu',
               style: const TextStyle(color: Colors.white),
             ),
           ],
@@ -65,12 +68,12 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   ElevatedButton.icon(
                     icon: const Icon(Icons.person_outline),
-                    label: Text(AppLocalizations.of(context)?.roleVillager ?? 'Continue as Guest'),
+                    label: Text(l10n?.roleVillager ?? 'Continue as Guest'),
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
                     onPressed: () {
                       // TODO: Implement guest dashboard logic
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Continuing as Guest...')),
+                        const SnackBar(content: Text('Continuing as Guest...')),
                       );
                     },
                   ),
@@ -79,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pushNamed('/role-selection', arguments: 'login');
                     },
-                    child: Text(AppLocalizations.of(context)?.signInButton ?? 'Login'),
+                    child: Text(l10n?.signInButton ?? 'Login'),
                   ),
                 ],
               ),
@@ -91,7 +94,8 @@ class HomeScreen extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).pushNamed(AppRoutes.reportSymptom);
         },
-        label: Text(AppLocalizations.of(context)!.reportSymptomsButton),
+        // FIX: Replaced ! with a null-aware operator and a fallback string.
+        label: Text(l10n?.reportSymptomsButton ?? 'Report Symptoms'),
         icon: const Icon(Icons.medical_services),
         backgroundColor: Colors.redAccent,
       ),
