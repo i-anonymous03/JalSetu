@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-# jalsetu
-
-A new Flutter project.
-=======
 # JalSetu
->>>>>>> af32c2443ff1b7f35c96479c21b68dc09342689d
 
 before executing change a few settings ,
 turn on (code runner:Run in terminal )
@@ -144,4 +138,3 @@ PowerShell Errors
 Running Batch commands directly in PowerShell.
 
 Execute the scripts using cmd /c start_work.bat or double-click the file in File Explorer.
-
