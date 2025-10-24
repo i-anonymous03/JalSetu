@@ -1,12 +1,11 @@
 package com.nayidisha.jalsetu
 
-// FIX: Change FlutterActivity to FlutterFragmentActivity.
-// Some plugins, especially those that interact with native Android UI or services
-// like Google Sign-In, require the Fragment-based activity to function correctly.
-// This is a common and critical fix for plugin compatibility.
+// FIX: Change from FlutterActivity to FlutterFragmentActivity
+// This is required for compatibility with many modern plugins,
+// especially when multidex is enabled.
 import io.flutter.embedding.android.FlutterFragmentActivity
 
 class MainActivity: FlutterFragmentActivity() {
-    // No need to override configureFlutterEngine() unless you have custom platform channels.
-    // The base class handles plugin registration.
+    // No other code is needed here for this fix.
 }
+

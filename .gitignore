@@ -28,6 +28,7 @@ VS Code (keeping this commented out as per standard practice)
 ==================================
 2. FLUTTER, DART, and BUILD FILES
 ==================================
+**/build/
 Build files and output
 /build
 .dart_tool/
@@ -50,6 +51,7 @@ app..map.json
 ==================================
 3. ANDROID AND ENVIRONMENT-SPECIFIC
 ==================================
+**/android/app/build/
 Android Studio will place build artifacts here
 /android/local.properties
 /android/.gradle
